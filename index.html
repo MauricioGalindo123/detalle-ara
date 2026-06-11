@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Casita 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(185deg, #050307 0%, #170b24 50%, #290a19 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .space {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            
+            background-image: url('Galaxia.jpg'); 
+            
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.6; 
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 10px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            text-align: center;
+            font-size: 15px;
+            color: #a5a1b8;
+            cursor: pointer;
+            padding: 8px 12px;
+            transition: 0.3s;
+            border-radius: 15px;
+        }
+
+        .nav-item.active {
+            color: #fff;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            box-shadow: 0 0 15px rgba(255, 65, 108, 0.5);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-title {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #ff758c;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .main-title {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #f761a1 0%, #8c1eff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #d1c7bd;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 30px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            margin-bottom: 20px;
+        }
+
+        .date-start {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff758c;
+            margin-bottom: 25px;
+        }
+
+        .grid-counter {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px 5px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .time-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff65a3;
+            text-shadow: 0 0 10px rgba(255, 101, 163, 0.3);
+        }
+
+        .time-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #8e8a9f;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .foto-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .foto-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .foto-item p {
+            font-size: 12px;
+            padding: 8px;
+            color: #d1c7bd;
+        }
+
+        .nota {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border-left: 4px solid #ff416c;
+            padding: 15px;
+            text-align: left;
+            border-radius: 0 15px 15px 0;
+            margin-bottom: 15px;
+        }
+
+        .nota h4 {
+            color: #ff758c;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .nota p {
+            font-size: 13px;
+            color: #e0e0e0;
+            line-height: 1.4;
+        }
+
+        .modal-felicitacion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 3, 7, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .modal-felicitacion.mostrar {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .contenido-felicitacion {
+            background: linear-gradient(135deg, #1f0f33 0%, #0d0614 100%);
+            padding: 35px 25px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(140, 30, 255, 0.3);
+            max-width: 380px;
+            width: 90%;
+            border: 1px solid rgba(247, 97, 161, 0.3);
+            transform: scale(0.7);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-felicitacion.mostrar .contenido-felicitacion {
+            transform: scale(1);
+        }
+
+        .contenido-felicitacion h2 {
+            font-size: 24px;
+            background: linear-gradient(45deg, #f761a1, #ff416c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .contenido-felicitacion p {
+            font-size: 15px;
+            color: #e0dbe3;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .contenido-felicitacion .meses-destacado {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff65a3;
+            text-shadow: 0 0 10px rgba(255, 101, 163, 0.5);
+        }
+
+        .contenido-felicitacion button {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 0 15px rgba(255, 65, 108, 0.4);
+            transition: 0.3s;
+        }
+
+        .contenido-felicitacion button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 65, 108, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="space"></div>
+
+    <div id="mensaje-felicitacion" class="modal-felicitacion">
+        <div class="contenido-felicitacion">
+            <h2>🎉 ¡Feliz Aniversario, amor de mi vida! 🎉</h2>
+            <p>Hoy vuelve a ser 11 y ya sumamos <span id="numero-meses-felicitacion" class="meses-destacado">00</span> meses de pura felicidad juntos.</p>
+            <p>Gracias por hacer mi vida más bonita cada día. ¡Te amo con todo mi reina! ❤️</p>
+            <button onclick="cerrarFelicitacion()">Te amo muchísimo</button>
+        </div>
+    </div>
+
+    <nav>
+        <div class="nav-item active" onclick="cambiarPestana(event, 'inicio')"> Inicio</div>
+        <div class="nav-item" onclick="cambiarPestana(event, 'fotos')"> Fotos</div>
+        <div class="nav-item" onclick="cambiarPestana(event, 'notitas')"> Notitas</div>
+    </nav>
+
+    <div class="container">
+        
+        <div id="inicio" class="section active">
+            <p class="header-title">— BIENVENIDA, ARA —</p>
+            <h1 class="main-title">NUESTRA<br>CASITA</h1>
+            <p class="subtitle">con mucho amor, tu novio obsesionado. ❤️</p>
+
+            <div class="card">
+                <p class="date-start">Juntos desde el 11 de Febrero de 2024<br><span style="text-transform: none; font-style: italic; color: #fff;">y cada segundo cuenta 💞</span></p>
+                
+                <div class="grid-counter">
+                    <div class="time-box"><div class="time-number" id="years">00</div><div class="time-label">Años</div></div>
+                    <div class="time-box"><div class="time-number" id="months">00</div><div class="time-label">Meses</div></div>
+                    <div class="time-box"><div class="time-number" id="days">00</div><div class="time-label">Días</div></div>
+                    <div class="time-box"><div class="time-number" id="hours">00</div><div class="time-label">Horas</div></div>
+                    <div class="time-box"><div class="time-number" id="minutes">00</div><div class="time-label">Min</div></div>
+                    <div class="time-box"><div class="time-number" id="seconds">00</div><div class="time-label">Seg</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="fotos" class="section">
+            <h2 style="margin-bottom: 20px; color: #ff758c;">Nuestros Momentos 📸</h2>
+            
+            <div class="card" style="padding: 15px; margin-bottom: 20px; text-align: left;">
+                <h4 style="color: #ff65a3; margin-bottom: 10px; font-size: 14px;">Añadir nuevo recuerdo ✨</h4>
+                <input type="file" id="input-foto" accept="image/*" style="margin-bottom: 10px; font-size: 12px; width: 100%;">
+                <input type="text" id="input-texto" placeholder="Escribe un mensaje o la fecha..." style="width: 100%; padding: 8px; margin-bottom: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff; font-size: 13px;">
+                <button onclick="subirFoto()" id="btn-subir" style="width: 100%; padding: 10px; background: linear-gradient(45deg, #ff416c, #ff4b2b); border: none; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer;">Subir Recuerdo</button>
+            </div>
+
+            <div class="galeria" id="galeria-fotos">
+                <p id="cargando-fotos" style="grid-column: span 2; color: #a5a1b8; font-size: 13px;">Cargando tus momentos mágicos...</p>
+            </div>
+        </div>
+
+        <div id="notitas" class="section">
+            <h2 style="margin-bottom: 20px; color: #ff758c;">Cartitas para ti 📝</h2>
+            
+            <div class="nota">
+                <h4>Te amo por cómo eres</h4>
+                <p>Gracias por llegar a mi vida y llenarla de felicidad cada día. Eres mi persona favorita. ❤️</p>
+            </div>
+
+            <div class="nota">
+                <h4>Un recordatorio</h4>
+                <p>Nunca olvides lo mucho que significas para mí. 🥰</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCRphseHOqPuqbDJmy3Tsnaa8v7zF2lWCo",
+            authDomain: "nuestra-casita-a741e.firebaseapp.com",
+            projectId: "nuestra-casita-a741e",
+            storageBucket: "nuestra-casita-a741e.firebasestorage.app",
+            messagingSenderId: "155799931708",
+            appId: "1:155799931708:web:32c4b73bb9663d27116c39"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        const fechaInicio = new Date(2024, 1, 11, 0, 0, 0); 
+        let cartelMostradoHoy = false; 
+
+        function actualizarContador() {
+            const ahora = new Date();
+            
+            let anos = ahora.getFullYear() - fechaInicio.getFullYear();
+            let meses = github = ahora.getMonth() - fechaInicio.getMonth();
+            
+            if (meses < 0 || (meses === 0 && ahora.getDate() < 11)) {
+                anos--;
+                meses += 12;
+            }
+            
+            if (ahora.getDate() < 11 && ahora.getMonth() !== fechaInicio.getMonth()) {
+                meses--;
+            }
+
+            let ultimoMesCumplido = new Date(fechaInicio.getFullYear() + anos, fechaInicio.getMonth() + meses, 11, 0, 0, 0);
+            let diferenciaTiempo = ahora - ultimoMesCumplido;
+
+            let segundos = Math.floor(diferenciaTiempo / 1000);
+            let minutos = Math.floor(segundos / 60);
+            let horas = Math.floor(minutos / 60);
+            let diasRestantes = Math.floor(horas / 24);
+
+            let horasRestantes = horas % 24;
+            let minutosRestantes = minutos % 60;
+            let segundosRestantes = segundos % 60;
+
+            document.getElementById('years').innerText = String(anos).padStart(2, '0');
+            document.getElementById('months').innerText = String(meses).padStart(2, '0');
+            document.getElementById('days').innerText = String(diasRestantes).padStart(2, '0');
+            document.getElementById('hours').innerText = String(horasRestantes).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutosRestantes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(segundosRestantes).padStart(2, '0');
+
+            let añosDiferenciaTotal = ahora.getFullYear() - fechaInicio.getFullYear();
+            let mesesDiferenciaTotal = ahora.getMonth() - fechaInicio.getMonth();
+            let totalMeses = (añosDiferenciaTotal * 12) + mesesDiferenciaTotal;
+
+            if (ahora.getDate() === 11 && !cartelMostradoHoy) {
+                document.getElementById('numero-meses-felicitacion').innerText = totalMeses;
+                document.getElementById('mensaje-felicitacion').classList.add('mostrar');
+            }
+        }
+
+        function cerrarFelicitacion() {
+            document.getElementById('mensaje-felicitacion').classList.remove('mostrar');
+            cartelMostradoHoy = true; 
+        }
+
+        setInterval(actualizarContador, 1000);
+        actualizarContador();
+
+        function cambiarPestana(evento, idSeccion) {
+            const secciones = document.querySelectorAll('.section');
+            secciones.forEach(sec => sec.classList.remove('active'));
+
+            const itemsMenu = document.querySelectorAll('.nav-item');
+            itemsMenu.forEach(item => item.classList.remove('active'));
+
+            document.getElementById(idSeccion).classList.add('active');
+            evento.currentTarget.classList.add('active');
+        }
+
+        async function subirFoto() {
+            const archivo = document.getElementById('input-foto').files[0];
+            const texto = document.getElementById('input-texto').value;
+            const btn = document.getElementById('btn-subir');
+
+            if (!archivo) {
+                alert("Por favor, selecciona una foto primero.");
+                return;
+            }
+
+            btn.innerText = "Subiendo... 🚀";
+            btn.disabled = true;
+
+            try {
+                const nombreUnico = Date.now() + "_" + archivo.name;
+                const storageRef = storage.ref('fotos/' + nombreUnico);
+                await storageRef.put(archivo);
+                
+                const urlFoto = await storageRef.getDownloadURL();
+
+                await db.collection('recuerdos').add({
+                    url: urlFoto,
+                    descripcion: texto || "Un momento hermoso 💕",
+                    fechaCreacion: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                document.getElementById('input-foto').value = "";
+                document.getElementById('input-texto').value = "";
+                btn.innerText = "Subir Recuerdo";
+                btn.disabled = false;
+                alert("¡Recuerdo guardado con éxito! 😍");
+
+            } catch (error) {
+                console.error(error);
+                alert("Hubo un error al subir la foto. Verifica las reglas de Storage y Firestore.");
+                btn.innerText = "Subir Recuerdo";
+                btn.disabled = false;
+            }
+        }
+
+        db.collection('recuerdos').orderBy('fechaCreacion', 'desc').onSnapshot((snapshot) => {
+            const galeria = document.getElementById('galeria-fotos');
+            galeria.innerHTML = ""; 
+
+            if(snapshot.empty) {
+                galeria.innerHTML = `<p style="grid-column: span 2; color: #a5a1b8; font-size: 13px;">Aún no hay fotos. ¡Sube la primera! 📸</p>`;
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const datos = doc.data();
+                const estructuraFoto = `
+                    <div class="foto-item">
+                        <img src="${datos.url}" alt="Recuerdo">
+                        <p>${datos.descripcion}</p>
+                    </div>
+                `;
+                galeria.innerHTML += estructuraFoto;
+            });
+        }, (error) => {
+            console.error("Error en Snapshot: ", error);
+        });
+    </script>
+</body>
+</html>
